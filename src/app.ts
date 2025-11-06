@@ -2,6 +2,7 @@ import fastify from 'fastify';
 import sensible from 'fastify-sensible';
 import { pgPool } from './db/pg';
 import { pingRedis } from './db/redis';
+import { identifyRoutes } from './modules/identify/identify.controller';
 
 export function buildApp() {
   const app = fastify({ logger: true });
@@ -38,6 +39,8 @@ export function buildApp() {
     const code = status.ok ? 200 : 500;
     return reply.status(code).send(status);
   });
+
+  app.register(identifyRoutes, { prefix: '/api' });
 
   return app;
 }

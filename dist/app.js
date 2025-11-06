@@ -8,6 +8,7 @@ const fastify_1 = __importDefault(require("fastify"));
 const fastify_sensible_1 = __importDefault(require("fastify-sensible"));
 const pg_1 = require("./db/pg");
 const redis_1 = require("./db/redis");
+const identify_controller_1 = require("./modules/identify/identify.controller");
 function buildApp() {
     const app = (0, fastify_1.default)({ logger: true });
     app.register(fastify_sensible_1.default);
@@ -40,5 +41,6 @@ function buildApp() {
         const code = status.ok ? 200 : 500;
         return reply.status(code).send(status);
     });
+    app.register(identify_controller_1.identifyRoutes, { prefix: '/api' });
     return app;
 }
