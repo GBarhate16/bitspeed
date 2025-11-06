@@ -3,11 +3,13 @@ import sensible from 'fastify-sensible';
 import { pgPool } from './db/pg';
 import { pingRedis } from './db/redis';
 import { identifyRoutes } from './modules/identify/identify.controller';
+import metricsPlugin from './plugins/metrics';
 
 export function buildApp() {
   const app = fastify({ logger: true });
 
   app.register(sensible);
+  app.register(metricsPlugin);
 
   app.get('/health', async (_request, reply) => {
     const status = {
