@@ -1,0 +1,28 @@
+// Prisma schema for Bitespeed Identify
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Contact {
+  id             Int       @id @default(autoincrement())
+  phoneNumber    String?   @db.VarChar(50)
+  email          String?   @db.VarChar(255)
+  linkedId       Int?
+  linkPrecedence String    @db.VarChar(10) // "primary" | "secondary"
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  @@index([email], map: "idx_contact_email")
+  @@index([phoneNumber], map: "idx_contact_phone")
+  @@index([linkedId], map: "idx_contact_linkedId")
+  @@index([createdAt], map: "idx_contact_createdAt")
+}
+
+
