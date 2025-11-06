@@ -7,8 +7,8 @@ export async function identifyRoutes(app: FastifyInstance) {
       body: {
         type: 'object',
         properties: {
-          email: { type: 'string' },
-          phoneNumber: { type: 'string' }
+          email: { type: 'string', minLength: 1, pattern: '^(?=.*\\S).*$' },
+          phoneNumber: { type: 'string', minLength: 1, pattern: '^(?=.*\\S).*$' }
         },
         additionalProperties: false
       },
